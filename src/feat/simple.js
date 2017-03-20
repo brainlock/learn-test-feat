@@ -15,7 +15,6 @@ class Finite {
     cardinality: number;
 
     constructor(cardinality: number, nth: nthGetter) {
-        if (isNaN(cardinality)) throw new Error();
         this.nth = nth;
         this.cardinality = cardinality;
     }
@@ -45,7 +44,6 @@ function sum(finites: Finite[]): Finite {
 
     const f2 = sum(fs);
 
-    if (f1.cardinality === undefined) throw new Error();
     return new Finite(f1.cardinality + f2.cardinality, (i: number) => {
         return i < f1.cardinality ? nth(f1, i) : nth(f2, i - f1.cardinality);
     });
