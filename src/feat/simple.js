@@ -88,4 +88,4 @@ function gen(f: Finite) {
     return range(f.cardinality).map(x => nth(f, x));
 }
 
-export { empty, singleton, sum, product, map, gen, nth };
+export { Finite, empty, singleton, sum, product, map, gen, nth };
