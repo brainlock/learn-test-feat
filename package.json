@@ -1,0 +1,21 @@
+{
+  "name": "test-enums",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.2.2",
+    "flow-bin": "^0.42.0",
+    "prettier": "^0.22.0"
+  },
+  "dependencies": {
+    "range": "0.0.3"
+  }
+}
