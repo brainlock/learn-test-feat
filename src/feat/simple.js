@@ -60,7 +60,7 @@ function product(finites: Finite[]): Finite {
         const f = finites[0];
 
         return new Finite(f.cardinality, (i: number) => {
-            return Array.of(nth(f, i));
+            return [nth(f, i)];
         });
     }
 
@@ -72,7 +72,7 @@ function product(finites: Finite[]): Finite {
         const nth_1 = nth(f1, Math.floor(i / f2.cardinality));
         const nth_2 = nth(f2, i % f2.cardinality);
 
-        return [nth_1].concat(nth_2);
+        return [nth_1, nth_2];
     });
 }
 
