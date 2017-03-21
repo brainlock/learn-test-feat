@@ -7,35 +7,34 @@
 
 import { range } from 'range';
 
-type wrappedObj = any;
-type nthGetter = (i: number) => wrappedObj;
+type nthGetter<A> = (i: number) => A;
 
-class Finite {
-    nth: nthGetter;
+class Finite<A> {
+    nth: nthGetter<A>;
     cardinality: number;
 
-    constructor(cardinality: number, nth: nthGetter) {
+    constructor(cardinality: number, nth: nthGetter<A>) {
         this.nth = nth;
         this.cardinality = cardinality;
     }
 }
 
-function nth(finite: Finite, idx: number) {
+function nth<A>(finite: Finite<A>, idx: number): A {
     return finite.nth(idx);
 }
 
-const empty = new Finite(0, (i: number) => {
+const empty: Finite<*> = new Finite(0, (i: number) => {
     throw new Error('empty: out of bounds');
 });
 
-function singleton(x: wrappedObj): Finite {
+function singleton<A>(x: A): Finite<A> {
     return new Finite(1, (i: number) => {
         if (i !== 0) throw new Error('singleton: out of bounds');
         return x;
     });
 }
 
-function sum(finites: Finite[]): Finite {
+function sum(finites: Finite<*>[]): Finite<*> {
     if (finites.length < 1) {
         return empty;
     }
@@ -49,7 +48,7 @@ function sum(finites: Finite[]): Finite {
     });
 }
 
-function product(finites: Finite[]): Finite {
+function product(finites: Finite<*>[]): Finite<*> {
     if (finites.length < 1) {
         throw new Error('product: empty');
     }
@@ -74,7 +73,7 @@ function product(finites: Finite[]): Finite {
     });
 }
 
-function map(f: Function, ...finites: Finite[]): Finite {
+function map(f: Function, ...finites: Finite<*>[]): Finite<*> {
     const finite = product(finites);
 
     return new Finite(finite.cardinality, (i: number) => {
@@ -82,7 +81,7 @@ function map(f: Function, ...finites: Finite[]): Finite {
     });
 }
 
-function gen(f: Finite) {
+function gen(f: Finite<*>) {
     return range(f.cardinality).map(x => nth(f, x));
 }
 
