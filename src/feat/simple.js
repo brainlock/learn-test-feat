@@ -18,11 +18,6 @@ class Finite {
         this.nth = nth;
         this.cardinality = cardinality;
     }
-
-    // This file it's called "simple" after all.
-    get length() {
-        return gen(this).length;
-    }
 }
 
 function nth(finite: Finite, idx: number) {
