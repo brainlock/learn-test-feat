@@ -34,15 +34,7 @@ function singleton<A>(x: A): Finite<A> {
     });
 }
 
-function sum(finites: Finite<*>[]): Finite<*> {
-    if (finites.length < 1) {
-        return empty;
-    }
-
-    const [f1, ...fs] = finites;
-
-    const f2 = sum(fs);
-
+function sum<A, B>(f1: Finite<A>, f2: Finite<B>): Finite<A | B> {
     return new Finite(f1.cardinality + f2.cardinality, (i: number) => {
         return i < f1.cardinality ? nth(f1, i) : nth(f2, i - f1.cardinality);
     });

@@ -5,20 +5,20 @@ test('cardinality of sum', () => {
     const b = singleton('b');
     const c = singleton('c');
 
-    expect(sum([empty, empty]).cardinality).toBe(0);
-    expect(sum([empty, a]).cardinality).toBe(1);
-    expect(sum([a, empty]).cardinality).toBe(1);
-    expect(sum([a, b]).cardinality).toBe(2);
-    expect(sum([a, b, c]).cardinality).toBe(3);
-    expect(sum([sum([a, b]), c]).cardinality).toBe(3);
-    expect(sum([a, sum([b, c])]).cardinality).toBe(3);
+    expect(sum(empty, empty).cardinality).toBe(0);
+    expect(sum(empty, a).cardinality).toBe(1);
+    expect(sum(a, empty).cardinality).toBe(1);
+    expect(sum(a, b).cardinality).toBe(2);
+    expect([a, b, c].reduce(sum, empty).cardinality).toBe(3);
+    expect(sum(sum(a, b), c).cardinality).toBe(3);
+    expect(sum(a, sum(b, c)).cardinality).toBe(3);
 });
 
 test('cardinality of product', () => {
     const a = singleton('a');
     const b = singleton('b');
 
-    const ab = sum([a, b]);
+    const ab = sum(a, b);
 
     expect(product([empty, empty]).cardinality).toBe(0);
     expect(product([empty, a]).cardinality).toBe(0);

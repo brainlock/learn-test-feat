@@ -53,7 +53,10 @@ export function strings(n: number) {
     const table = [getStringSingleton('')];
 
     for (const i of range(0, n)) {
-        const p = product([table[i], sum(_ALPHABET.map(getStringSingleton))]);
+        const p = product([
+            table[i],
+            _ALPHABET.map(getStringSingleton).reduce(sum, empty),
+        ]);
         table[i + 1] = map(([strs]) => strs.join(''), p);
     }
 
