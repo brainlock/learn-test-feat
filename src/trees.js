@@ -6,7 +6,7 @@
 // @flow
 
 import { range } from 'range';
-import { map, nth, sum, singleton, gen } from './feat/simple';
+import { map, nth, sum, singleton, gen, empty } from './feat/simple';
 
 class Node {
     left: ?Node;
@@ -33,7 +33,7 @@ function trees(n: number) {
             return node(i, j);
         });
 
-        table[i + 1] = sum(nodes);
+        table[i + 1] = nodes.reduce(sum, empty);
     }
 
     return table[n];
