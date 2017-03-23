@@ -1,6 +1,14 @@
 // These tests have been directly ported from
 // https://github.com/polux/enumerators/blob/e3de2a08c0c777c14b0ba3f3724db4192a583ee1/test/finite_test.dart
-import { empty, singleton, sum, product, map, apply } from '../src/feat/simple';
+import {
+    empty,
+    singleton,
+    nth,
+    sum,
+    product,
+    map,
+    apply,
+} from '../src/feat/simple';
 
 test('cardinality of sum', () => {
     const a = singleton('a');
@@ -61,4 +69,20 @@ test('cardinality of apply', () => {
     expect(apply(fun1, sum(one, two)).cardinality).toBe(2);
     expect(apply(sum(fun1, fun2), one).cardinality).toBe(2);
     expect(apply(sum(fun1, fun2), sum(one, two)).cardinality).toBe(4);
+});
+
+test('index of empty', () => {
+    for (let i = 0; i < 100; i++) {
+        expect(() => nth(empty, i)).toThrow();
+    }
+});
+
+test('index of singleton', () => {
+    const foo = singleton('foo');
+
+    expect(nth(foo, 0)).toEqual('foo');
+
+    for (let i = 1; i < 100; i++) {
+        expect(() => nth(foo, i)).toThrow();
+    }
 });
