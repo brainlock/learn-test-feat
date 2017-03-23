@@ -1,4 +1,6 @@
-import { empty, singleton, sum, product, map } from '../src/feat/simple';
+// These tests have been directly ported from
+// https://github.com/polux/enumerators/blob/e3de2a08c0c777c14b0ba3f3724db4192a583ee1/test/finite_test.dart
+import { empty, singleton, sum, product, map, apply } from '../src/feat/simple';
 
 test('cardinality of sum', () => {
     const a = singleton('a');
@@ -46,4 +48,17 @@ test('cardinality of map', () => {
     checkUnchanged(a, n => n + 1);
     checkUnchanged(sum(a, b), n => n + 1);
     checkUnchanged(product(sum(a, b), a), ([fst, snd]) => fst + snd);
+});
+
+test('cardinality of apply', () => {
+    const fun1 = singleton(n => n + 1);
+    const fun2 = singleton(n => n + 2);
+
+    const one = singleton(1);
+    const two = singleton(2);
+
+    expect(apply(fun1, one).cardinality).toBe(1);
+    expect(apply(fun1, sum(one, two)).cardinality).toBe(2);
+    expect(apply(sum(fun1, fun2), one).cardinality).toBe(2);
+    expect(apply(sum(fun1, fun2), sum(one, two)).cardinality).toBe(4);
 });

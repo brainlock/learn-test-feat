@@ -55,8 +55,13 @@ function map<A, B>(f: (x: A) => B, finite: Finite<A>): Finite<B> {
     });
 }
 
+function apply<A, B>(funFinite: Finite<(i: A) => B>, f: Finite<A>): Finite<B> {
+    const pairs = product(funFinite, f);
+    return map(([f, x]) => f(x), pairs);
+}
+
 function gen(f: Finite<*>) {
     return range(f.cardinality).map(x => nth(f, x));
 }
 
-export { Finite, empty, singleton, sum, product, map, gen, nth };
+export { Finite, empty, singleton, sum, product, map, apply, gen, nth };
