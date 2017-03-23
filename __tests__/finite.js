@@ -1,4 +1,4 @@
-import { empty, singleton, sum, product } from '../src/feat/simple';
+import { empty, singleton, sum, product, map } from '../src/feat/simple';
 
 test('cardinality of sum', () => {
     const a = singleton('a');
@@ -32,4 +32,18 @@ test('cardinality of product', () => {
 
     expect(product(product(ab, ab), ab).cardinality).toBe(8);
     expect(product(ab, product(ab, ab)).cardinality).toBe(8);
+});
+
+test('cardinality of map', () => {
+    const a = singleton(1);
+    const b = singleton(2);
+
+    function checkUnchanged(fin, f) {
+        expect(map(f, fin).cardinality).toBe(fin.cardinality);
+    }
+
+    checkUnchanged(empty, n => n + 1);
+    checkUnchanged(a, n => n + 1);
+    checkUnchanged(sum(a, b), n => n + 1);
+    checkUnchanged(product(sum(a, b), a), ([fst, snd]) => fst + snd);
 });
