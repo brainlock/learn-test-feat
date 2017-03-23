@@ -6,7 +6,7 @@
 // @flow
 
 import { range } from 'range';
-import { map, nth, sum, singleton, gen, empty } from './feat/simple';
+import { map, product, nth, sum, singleton, gen, empty } from './feat/simple';
 
 class Node {
     left: ?Node;
@@ -21,7 +21,8 @@ class Node {
 function trees(n: number) {
     const table = [singleton(null)];
 
-    const node = (i, j) => map(([i, j]) => new Node(i, j), table[i], table[j]);
+    const node = (i, j) =>
+        map(([i, j]) => new Node(i, j), product(table[i], table[j]));
 
     for (const i of range(0, n)) {
         const is = range(0, i + 1);

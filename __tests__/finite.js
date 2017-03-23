@@ -20,16 +20,16 @@ test('cardinality of product', () => {
 
     const ab = sum(a, b);
 
-    expect(product([empty, empty]).cardinality).toBe(0);
-    expect(product([empty, a]).cardinality).toBe(0);
-    expect(product([a, empty]).cardinality).toBe(0);
+    expect(product(empty, empty).cardinality).toBe(0);
+    expect(product(empty, a).cardinality).toBe(0);
+    expect(product(a, empty).cardinality).toBe(0);
 
-    expect(product([a, b]).cardinality).toBe(1);
+    expect(product(a, b).cardinality).toBe(1);
 
-    expect(product([ab, a]).cardinality).toBe(2);
+    expect(product(ab, a).cardinality).toBe(2);
 
-    expect(product([ab, ab]).cardinality).toBe(4);
+    expect(product(ab, ab).cardinality).toBe(4);
 
-    expect(product([product([ab, ab]), ab]).cardinality).toBe(8);
-    expect(product([ab, product([ab, ab])]).cardinality).toBe(8);
+    expect(product(product(ab, ab), ab).cardinality).toBe(8);
+    expect(product(ab, product(ab, ab)).cardinality).toBe(8);
 });

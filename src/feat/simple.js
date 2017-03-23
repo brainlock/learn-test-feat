@@ -40,23 +40,7 @@ function sum<A, B>(f1: Finite<A>, f2: Finite<B>): Finite<A | B> {
     });
 }
 
-function product(finites: Finite<*>[]): Finite<*> {
-    if (finites.length < 1) {
-        throw new Error('product: empty');
-    }
-
-    if (finites.length === 1) {
-        const f = finites[0];
-
-        return new Finite(f.cardinality, (i: number) => {
-            return [nth(f, i)];
-        });
-    }
-
-    const [f1, ...fs] = finites;
-
-    const f2 = product(fs);
-
+function product<A, B>(f1: Finite<A>, f2: Finite<B>): Finite<[A, B]> {
     return new Finite(f1.cardinality * f2.cardinality, (i: number) => {
         const nth_1 = nth(f1, Math.floor(i / f2.cardinality));
         const nth_2 = nth(f2, i % f2.cardinality);
@@ -65,9 +49,7 @@ function product(finites: Finite<*>[]): Finite<*> {
     });
 }
 
-function map(f: Function, ...finites: Finite<*>[]): Finite<*> {
-    const finite = product(finites);
-
+function map<A, B>(f: (x: A) => B, finite: Finite<A>): Finite<B> {
     return new Finite(finite.cardinality, (i: number) => {
         return f(nth(finite, i));
     });
