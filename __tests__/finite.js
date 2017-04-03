@@ -10,6 +10,8 @@ import {
     apply,
 } from '../src/feat/simple';
 
+import { range } from 'range';
+
 test('cardinality of sum', () => {
     const a = singleton('a');
     const b = singleton('b');
@@ -155,4 +157,10 @@ test('index of apply', () => {
     for (let i = 4; i < 100; i++) {
         expect(() => nth(applied, i)).toThrow();
     }
+});
+
+test('recursion is optimized out', () => {
+    const things = range(1, 10000).map(singleton).reduce(product);
+
+    expect(() => nth(things, 100)).not.toThrow(RangeError);
 });
