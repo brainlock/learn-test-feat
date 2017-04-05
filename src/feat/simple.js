@@ -25,19 +25,13 @@ class Finite<A> {
 function nth<A>(finite: Finite<A>, idx: number): any {
     let result;
 
-    const stack = [
-        finite.nth.bind(finite, idx, val => {
-            result = val;
-            return;
-        }),
-    ];
+    let continuation = finite.nth(idx, val => {
+        result = val;
+        return;
+    });
 
-    while (stack.length > 0) {
-        const f = stack.pop();
-
-        const next = f();
-
-        if (next) stack.push(next);
+    while (continuation) {
+        continuation = continuation();
     }
 
     return result;
